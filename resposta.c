@@ -5,6 +5,7 @@ struct Candidato {
     char nome[50];
     int votos;
 };
+
 int votar(struct Candidato candidatos[], int totalCandidatos) {
     int voto;
     printf("Digite o número do candidato (1 a 99): ");
@@ -24,12 +25,14 @@ int votar(struct Candidato candidatos[], int totalCandidatos) {
     }
     return 0;
 }
+
 void apurarVotos(struct Candidato candidatos[], int totalCandidatos) {
     printf("\nResultado da apuração de votos:\n");
-    for (int i = 1; i <= totalCandidatos; i++) {
+    for (int i = 0; i < totalCandidatos; i++) { 
         printf("%s (Número %d): %d votos\n", candidatos[i].nome, candidatos[i].numero, candidatos[i].votos);
     }
 }
+
 void percentualVotos(struct Candidato candidatos[], int totalCandidatos, int totalVotos) {
     if (totalVotos == 0) {
         printf("Nenhum voto computado ainda.\n");
@@ -37,15 +40,17 @@ void percentualVotos(struct Candidato candidatos[], int totalCandidatos, int tot
     }
     printf("\nPercentual de votos:\n");
     for (int i = 0; i < totalCandidatos; i++) {
-        float percentual = totalVotos/100;
-         printf("%s: %.2f%% dos votos\n", candidatos[i].nome, percentual);
+        float percentual = (float)candidatos[i].votos / totalVotos * 100; 
+        printf("%s: %.2f%% dos votos\n", candidatos[i].nome, percentual);
     }
 }
+
 int main() {
     struct Candidato candidatos[3] = {{10, "João da Padaria", 0}, {20, "Maria da Farmácia", 0}, {30, "Zé do Gás", 0}};
     int opcao;
     int totalVotos = 0;
     int totalCandidatos = 3;
+    
     do {
         printf("\nMenu de opções:\n");
         printf("1. Votar\n");
@@ -54,18 +59,25 @@ int main() {
         printf("4. Sair\n");
         printf("Escolha uma opção: ");
         scanf("%d", &opcao);
+        
         switch (opcao) {
             case 1:
                 totalVotos += votar(candidatos, totalCandidatos);
+                break; 
             case 2:
                 apurarVotos(candidatos, totalCandidatos);
+                break; 
             case 3:
                 percentualVotos(candidatos, totalCandidatos, totalVotos);
+                break;
             case 4:
                 printf("Saindo...\n");
+                break; 
             default:
                 printf("Opção inválida!\n");
+                break; 
         }
     } while (opcao != 4);
+
     return 0;
 }
